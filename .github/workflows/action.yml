@@ -1,29 +1,18 @@
-name: Cryptosoft Nutrition label
-on: push
+name: Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
 jobs:
-  build:
+  Explore-GitHub-Actions:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [14]
-    name: Node ${{ matrix.node }} sample
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node }}
-      - run: npm install
-      - name: Create SBOM with CycloneDX
-        id: sbom
-        uses: CycloneDX/gh-node-module-generatebom@master 
-        with:
-            output: './test.app.bom.json'
-      - name: Save Sbom to new file 
-        run: |    
-           echo -n "$(cat './test.app.bom.json')" | jq '. + {"name": "${{github.actor}}"}' | jq '. + {"repo": "${{github.repositoryUrl}}"}' > sbom_file.json 
-      - name: Call Api
-        run: |  
-          curl -k --request POST 'https://dt.cryptosoft.com:9443/api/v1/sbom/upload-github' \
-          --header 'Content-Type: application/json' \
-          --data  @sbom_file.json 
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
