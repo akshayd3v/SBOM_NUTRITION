@@ -1,4 +1,4 @@
-name: Build SBOM and send to api
+name: Cryptosoft Nutrition label
 on: push
 jobs:
   build:
